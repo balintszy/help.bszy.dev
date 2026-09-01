@@ -140,6 +140,27 @@
   .plan .name { font-weight: 650; font-size: 1.02rem; }
   .plan .price { font-weight: 700; font-size: 1.05rem; white-space: nowrap; }
   .plan .desc { color: var(--ink-soft); font-size: 0.87rem; margin-top: 7px; }
+  .plan {
+    cursor: pointer; transition: border-color .15s, background .15s, transform .1s;
+  }
+  .plan:hover { border-color: var(--signal); }
+  .plan:active { transform: scale(0.995); }
+  .plan.selected {
+    border-color: var(--signal);
+    box-shadow: 0 0 0 1px var(--signal) inset;
+    background: rgba(255,176,32,0.06);
+  }
+  .plan .check {
+    position: absolute; top: 16px; right: 16px;
+    width: 20px; height: 20px; border-radius: 50%;
+    border: 2px solid var(--line); display: grid; place-items: center;
+    color: var(--signal-ink); font-size: 0.7rem; font-weight: 800;
+    background: transparent; transition: background .15s, border-color .15s;
+  }
+  .plan.selected .check { background: var(--signal); border-color: var(--signal); }
+  .plan .check::after { content: "✓"; opacity: 0; transition: opacity .15s; }
+  .plan.selected .check::after { opacity: 1; }
+  .plan:focus-visible { outline: 2px solid var(--signal); outline-offset: 2px; }
 
   /* CTA */
   .cta-box { margin-top: 26px; text-align: center; }
@@ -152,6 +173,10 @@
   }
   .btn:hover { filter: brightness(1.06); }
   .btn:focus-visible { outline: 3px solid #fff; outline-offset: 2px; }
+  .btn.disabled {
+    background: var(--surface-2); color: var(--ink-mute);
+    pointer-events: none; cursor: default;
+  }
   .paynote {
     margin-top: 12px; font-size: 0.78rem; color: var(--ink-mute); line-height: 1.5;
   }
@@ -239,27 +264,39 @@
     <div class="sec-title" data-i18n="plans_title">Pakete</div>
     <div class="sec-sub" data-i18n="plans_sub">Alle Preise in CHF. Als Kleinunternehmen ohne MwSt.-Ausweis.</div>
     <div class="plans">
-      <div class="plan">
+      <div class="plan" tabindex="0" role="button" aria-pressed="false"
+           data-name-key="plan_1_name" data-price="39 CHF"
+           data-url="https://buy.stripe.com/14A14n0O61wl3sI5Nw1Fe00">
+        <span class="check"></span>
         <div class="head"><span class="name" data-i18n="plan_1_name">Schnellberatung</span><span class="price">39 CHF</span></div>
         <div class="desc" data-i18n="plan_1_desc">Eine konkrete Frage, eine klare Antwort. Pauschal, kurz &amp; direkt.</div>
       </div>
-      <div class="plan feature">
+      <div class="plan feature selected" tabindex="0" role="button" aria-pressed="true"
+           data-name-key="plan_2_name" data-price="79 CHF"
+           data-url="https://buy.stripe.com/8x28wP68q4IxfbqcbU1Fe01">
+        <span class="check"></span>
         <span class="tag" data-i18n="plan_popular">BELIEBT</span>
         <div class="head"><span class="name" data-i18n="plan_2_name">Support</span><span class="price">79 CHF</span></div>
         <div class="desc" data-i18n="plan_2_desc">Mindestens 30 Min. Dauert's länger, sag ich Bescheid und rechne danach mit 160 CHF/h ab — nie ohne Vorwarnung.</div>
       </div>
-      <div class="plan">
+      <div class="plan" tabindex="0" role="button" aria-pressed="false"
+           data-name-key="plan_3_name" data-price="160 CHF/h"
+           data-url="mailto:support@bszy.dev?subject=Anfrage%3A%20Support%20nach%20Aufwand%20(160%20CHF%2Fh)&body=Hallo%20Balint%2C%0A%0Aich%20m%C3%B6chte%20Support%20nach%20Aufwand%20(160%20CHF%2Fh)%20anfragen.%0A%0AMein%20Anliegen%3A%0A%0A%0AName%3A%0AErreichbar%20per%20(Tel%2FWhatsApp%2FE-Mail)%3A%0A%0ADanke%20und%20Gruss">
+        <span class="check"></span>
         <div class="head"><span class="name" data-i18n="plan_3_name">Nach Aufwand</span><span class="price">160 CHF/h</span></div>
         <div class="desc" data-i18n="plan_3_desc">Für grössere Sachen. 1 Stunde im Voraus, weiterer Aufwand vorher besprochen.</div>
       </div>
-      <div class="plan">
+      <div class="plan" tabindex="0" role="button" aria-pressed="false"
+           data-name-key="plan_4_name" data-price="160 CHF/h"
+           data-url="mailto:support@bszy.dev?subject=Anfrage%3A%20Vor-Ort%20Support%20(160%20CHF%2Fh)&body=Hallo%20Balint%2C%0A%0Aich%20m%C3%B6chte%20Vor-Ort%20Support%20(160%20CHF%2Fh)%20anfragen.%0A%0AMein%20Anliegen%3A%0A%0A%0AAdresse%20(f%C3%BCr%20die%20Anfahrt)%3A%0AName%3A%0AErreichbar%20per%20(Tel%2FWhatsApp%2FE-Mail)%3A%0AWunschtermin%3A%0A%0ADanke%20und%20Gruss">
+        <span class="check"></span>
         <div class="head"><span class="name" data-i18n="plan_4_name">Vor Ort</span><span class="price">160 CHF/h</span></div>
         <div class="desc" data-i18n="plan_4_desc">Anfahrt: bis 10 km gratis · 10–25 km +20 CHF · 25–40 km +35 CHF · &gt;40 km nach Absprache.</div>
       </div>
     </div>
 
     <div class="cta-box">
-      <a class="btn" href="#" id="payBtn" data-i18n="cta_btn">Support buchen — 79 CHF</a>
+      <a class="btn" href="https://buy.stripe.com/8x28wP68q4IxfbqcbU1Fe01" target="_blank" rel="noopener" id="ctaBtn">Support buchen — 79 CHF</a>
       <div class="paynote"><span data-i18n="cta_note">Zahlung vor Leistung via Stripe. Keine Garantie auf vollständige Lösung — du bekommst immer zuerst eine ehrliche Einschätzung. Fragen vorab:</span> <a class="link" href="mailto:support@bszy.dev">support@bszy.dev</a></div>
       <div class="trust">
         <span data-i18n="trust_1">🔒 SSL-verschlüsselt</span>
@@ -329,6 +366,8 @@
       plan_3_name: "Nach Aufwand", plan_3_desc: "Für grössere Sachen. 1 Stunde im Voraus, weiterer Aufwand vorher besprochen.",
       plan_4_name: "Vor Ort", plan_4_desc: "Anfahrt: bis 10 km gratis · 10–25 km +20 CHF · 25–40 km +35 CHF · >40 km nach Absprache.",
       cta_btn: "Support buchen — 79 CHF",
+      cta_book: "buchen —",
+      cta_request: "anfragen —",
       cta_note: "Zahlung vor Leistung via Stripe. Keine Garantie auf vollständige Lösung — du bekommst immer zuerst eine ehrliche Einschätzung. Fragen vorab:",
       trust_1: "🔒 SSL-verschlüsselt", trust_2: "💳 TWINT & Kreditkarte", trust_3: "🚫 Kein Abo",
       foot_imp: "Impressum", foot_agb: "AGB",
@@ -372,6 +411,8 @@
       plan_3_name: "By the hour", plan_3_desc: "For bigger jobs. One hour up front, any further time agreed beforehand.",
       plan_4_name: "On site", plan_4_desc: "Travel: up to 10 km free · 10–25 km +20 CHF · 25–40 km +35 CHF · >40 km by arrangement.",
       cta_btn: "Book support — 79 CHF",
+      cta_book: "Book",
+      cta_request: "Request",
       cta_note: "Payment before service via Stripe. No guarantee of a full fix — you always get an honest assessment first. Questions beforehand:",
       trust_1: "🔒 SSL-encrypted", trust_2: "💳 TWINT & credit card", trust_3: "🚫 No subscription",
       foot_imp: "Legal notice", foot_agb: "Terms",
@@ -405,6 +446,7 @@
       b.classList.toggle("active", b.getAttribute("data-lang") === lang);
     });
     updateStatus(); // Status-Text an neue Sprache anpassen
+    updateCta();    // CTA-Button-Text an neue Sprache anpassen
     try {
       var url = new URL(window.location);
       url.searchParams.set("lang", lang);
@@ -431,13 +473,46 @@
     }
   }
 
-  document.getElementById('payBtn').addEventListener('click', function(e){
-    e.preventDefault();
-    alert('Platzhalter: hier verlinkst du deinen echten Stripe-Payment-Link.');
-  });
-
   document.querySelectorAll(".langswitch button").forEach(function(b){
     b.addEventListener("click", function(){ applyLang(b.getAttribute("data-lang")); });
+  });
+
+  // ---- Paket-Auswahl ----
+  var selectedPlan = document.querySelector(".plan.selected");
+
+  function selectPlan(plan){
+    if (!plan) return;
+    document.querySelectorAll(".plan").forEach(function(p){
+      p.classList.remove("selected");
+      p.setAttribute("aria-pressed", "false");
+    });
+    plan.classList.add("selected");
+    plan.setAttribute("aria-pressed", "true");
+    selectedPlan = plan;
+    updateCta();
+  }
+
+  function updateCta(){
+    var btn = document.getElementById("ctaBtn");
+    if (!btn || !selectedPlan) return;
+    var dict = I18N[currentLang];
+    var name = dict[selectedPlan.getAttribute("data-name-key")] || "";
+    var price = selectedPlan.getAttribute("data-price");
+    var url = selectedPlan.getAttribute("data-url");
+    var isMail = url.indexOf("mailto:") === 0;
+    var verb = isMail ? dict.cta_request : dict.cta_book;
+    btn.textContent = name + " " + verb + " " + price;
+    btn.setAttribute("href", url);
+    // Stripe im neuen Tab, E-Mail im selben Fenster
+    if (isMail) { btn.removeAttribute("target"); }
+    else { btn.setAttribute("target", "_blank"); btn.setAttribute("rel", "noopener"); }
+  }
+
+  document.querySelectorAll(".plan").forEach(function(plan){
+    plan.addEventListener("click", function(){ selectPlan(plan); });
+    plan.addEventListener("keydown", function(e){
+      if (e.key === "Enter" || e.key === " ") { e.preventDefault(); selectPlan(plan); }
+    });
   });
 
   // Startsprache: URL-Parameter, sonst Browsersprache, sonst Deutsch
