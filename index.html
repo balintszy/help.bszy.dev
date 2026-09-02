@@ -136,7 +136,10 @@
     font-size: 0.7rem; font-weight: 700; padding: 3px 9px; border-radius: 6px;
     letter-spacing: 0.02em;
   }
-  .plan .head { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; }
+  .plan .head {
+    display: flex; justify-content: space-between; align-items: baseline; gap: 10px;
+    padding-left: 30px;
+  }
   .plan .name { font-weight: 650; font-size: 1.02rem; }
   .plan .price { font-weight: 700; font-size: 1.05rem; white-space: nowrap; }
   .plan .desc { color: var(--ink-soft); font-size: 0.87rem; margin-top: 7px; }
@@ -151,7 +154,7 @@
     background: rgba(255,176,32,0.06);
   }
   .plan .check {
-    position: absolute; top: 16px; right: 16px;
+    position: absolute; top: 18px; left: 16px;
     width: 20px; height: 20px; border-radius: 50%;
     border: 2px solid var(--line); display: grid; place-items: center;
     color: var(--signal-ink); font-size: 0.7rem; font-weight: 800;
