@@ -4,399 +4,327 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="description" content="Persönlicher IT-Support aus Effingen für Privatpersonen in der Region Brugg und im Fricktal — Mac, PC, iPhone, WLAN und mehr. Remote oder vor Ort.">
-<meta name="theme-color" content="#101418">
+<meta name="theme-color" content="#0E0F12">
+<meta name="color-scheme" content="dark">
 <title>IT-Hilfe Effingen, Brugg &amp; Fricktal — help.bszy.dev</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Sans:wght@400;500&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg: #101418;
-    --surface: #171c22;
-    --surface-2: #1e252d;
-    --line: #2a333d;
-    --ink: #eef2f6;
-    --ink-soft: #a5b2bf;
-    --ink-mute: #6d7c8a;
-    --signal: #ffb020;      /* warm amber — "online / helfen" */
-    --signal-ink: #101418;
-    --ok: #4ec98a;
-    --radius: 14px;
-    --maxw: 640px;
+    --bg: #0E0F12; --bg-2: #15171C; --bg-3: #1C1F26; --line: #262A33;
+    --ink: #E6E6E3; --ink-2: #B4B4B0; --ink-3: #8E8E93;
+    --accent: #F05138; --accent-2: #FF7A5C; --accent-btn: #D23F27;
+    --kw: #FF7AB2; --ty: #7DD3FC; --str: #FCA86B; --cm: #7C8494; --ok: #6BD49A; --warn: #FEBC2E;
+    --mono: "IBM Plex Mono", ui-monospace, Menlo, monospace;
+    --sans: "IBM Plex Sans", -apple-system, sans-serif;
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
-  html { scroll-behavior: smooth; }
-  body {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-    background: var(--bg);
-    color: var(--ink);
-    line-height: 1.6;
-    -webkit-font-smoothing: antialiased;
-  }
-  .wrap { max-width: var(--maxw); margin: 0 auto; padding: 0 20px; }
+  html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+  body { background: var(--bg); color: var(--ink); font: 1rem/1.65 var(--sans); -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+  a { color: inherit; }
+  :focus-visible { outline: 2px solid var(--accent-2); outline-offset: 3px; border-radius: 3px; }
+  .wrap { max-width: 800px; margin: 0 auto; padding: 0 20px; }
+  .skip { position: absolute; left: -9999px; top: 12px; z-index: 30; background: var(--accent-2); color: #000; padding: 8px 14px; font: 500 .8rem var(--mono); text-decoration: none; }
+  .skip:focus { left: 12px; }
 
-  /* Header */
-  header {
-    padding: 28px 0 20px;
-    border-bottom: 1px solid var(--line);
-  }
-  .brandrow { display: flex; align-items: center; gap: 14px; }
-  .brandrow img {
-    width: 48px; height: 48px; border-radius: 12px; object-fit: cover;
-    background: var(--surface-2);
-  }
-  .brandname { font-size: 1.05rem; font-weight: 650; letter-spacing: -0.01em; }
-  .brandmeta { font-size: 0.82rem; color: var(--ink-mute); }
-  .status {
-    margin-left: auto; display: inline-flex; align-items: center; gap: 7px;
-    font-size: 0.8rem; color: var(--ok); font-weight: 600;
-  }
-  .status .dot {
-    width: 8px; height: 8px; border-radius: 50%; background: var(--ok);
-    box-shadow: 0 0 0 0 rgba(78,201,138,0.6);
-    animation: pulse 2.4s infinite;
-  }
-  .status.off { color: #ff6b6b; }
-  .status.off .dot { background: #ff6b6b; animation: none; }
-  @keyframes pulse {
-    0% { box-shadow: 0 0 0 0 rgba(78,201,138,0.5); }
-    70% { box-shadow: 0 0 0 7px rgba(78,201,138,0); }
-    100% { box-shadow: 0 0 0 0 rgba(78,201,138,0); }
-  }
-  @media (prefers-reduced-motion: reduce) {
-    .status .dot { animation: none; }
-  }
+  header { position: sticky; top: 0; z-index: 5; background: rgba(14,15,18,.85); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); border-bottom: 1px solid var(--line); }
+  header .wrap { display: flex; align-items: center; gap: 14px; height: 60px; }
+  .lights { display: flex; gap: 7px; }
+  .lights i { width: 11px; height: 11px; border-radius: 50%; background: #FF5F57; }
+  .lights i:nth-child(2) { background: #FEBC2E; } .lights i:nth-child(3) { background: #28C840; }
+  .scheme { display: flex; align-items: center; gap: 8px; font: 500 .8rem var(--mono); color: var(--ink-2); background: var(--bg-3); border: 1px solid var(--line); border-radius: 6px; padding: 5px 10px; white-space: nowrap; text-decoration: none; min-width: 0; }
+  .scheme img { width: 18px; height: 18px; border-radius: 4px; }
+  .scheme b { color: var(--ink); font-weight: 500; }
+  .status { margin-left: auto; font: .76rem var(--mono); display: flex; align-items: center; gap: 7px; color: var(--ok); white-space: nowrap; }
+  .status::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: currentColor; box-shadow: 0 0 10px currentColor; }
+  .status.off { color: var(--warn); }
+  .langswitch { display: inline-flex; border: 1px solid var(--line); border-radius: 6px; overflow: hidden; flex-shrink: 0; }
+  .langswitch button { font: 500 .72rem var(--mono); color: var(--ink-3); background: none; border: 0; padding: 5px 9px; cursor: pointer; transition: background .15s, color .15s; }
+  .langswitch button:hover { color: var(--ink); }
+  .langswitch button[aria-pressed="true"] { background: var(--ink); color: var(--bg); }
 
-  .langswitch {
-    display: inline-flex; margin-left: 12px; border: 1px solid var(--line);
-    border-radius: 999px; overflow: hidden; font-size: 0.76rem; font-weight: 600;
-  }
-  .langswitch button {
-    background: none; border: none; color: var(--ink-mute);
-    padding: 7px 11px; cursor: pointer; font: inherit; transition: color .15s, background .15s;
-  }
-  .langswitch button.active { background: var(--signal); color: var(--signal-ink); }
-  .langswitch button:focus-visible { outline: 2px solid var(--signal); outline-offset: -2px; }
+  .hero { padding: 72px 0 60px; }
+  .path { font: .8rem var(--mono); color: var(--ink-3); }
+  .path span { color: var(--accent); }
+  h1 { margin-top: 18px; font: 600 clamp(1.9rem, 5.4vw, 2.9rem)/1.14 var(--mono); letter-spacing: -.03em; }
+  h1 .hl { color: var(--accent); }
+  h1 .cursor { display: inline-block; width: .55em; height: 1em; background: var(--accent); vertical-align: -.12em; margin-left: .1em; animation: blink 1.1s steps(1) infinite; }
+  @keyframes blink { 50% { opacity: 0; } }
+  .lede { margin-top: 22px; color: var(--ink-2); font-size: 1.08rem; max-width: 58ch; }
+  .actions { margin-top: 30px; display: flex; flex-wrap: wrap; gap: 12px; }
+  .btn { display: inline-flex; align-items: center; gap: 10px; font: 500 .88rem var(--mono); text-decoration: none; padding: 13px 18px; border-radius: 8px; background: var(--accent-btn); color: #fff; box-shadow: 0 0 0 1px rgba(255,255,255,.08) inset, 0 8px 24px -8px rgba(240,81,56,.6); transition: transform .15s, box-shadow .2s, background .2s; }
+  .btn:hover { transform: translateY(-1px); background: #DC4429; box-shadow: 0 0 0 1px rgba(255,255,255,.12) inset, 0 12px 30px -8px rgba(240,81,56,.75); }
+  .btn.ghost { background: var(--bg-3); color: var(--ink); box-shadow: 0 0 0 1px var(--line) inset; }
+  .btn.ghost:hover { background: #242833; }
+  .btn kbd { font: .72rem var(--mono); opacity: .75; border: 1px solid currentColor; border-radius: 4px; padding: 0 5px; }
 
-  /* Hero */
-  .hero { padding: 40px 0 28px; }
-  .hero h1 {
-    font-size: clamp(1.7rem, 6vw, 2.3rem);
-    line-height: 1.15; letter-spacing: -0.02em; font-weight: 700;
-  }
-  .hero p {
-    margin-top: 14px; color: var(--ink-soft); font-size: 1.02rem; max-width: 52ch;
-  }
-  .response-badge {
-    display: inline-flex; align-items: center; gap: 8px;
-    margin-top: 20px; padding: 8px 14px;
-    background: var(--surface); border: 1px solid var(--line);
-    border-radius: 999px; font-size: 0.85rem; color: var(--ink-soft);
-  }
-  .response-badge b { color: var(--ink); font-weight: 650; }
+  .term { margin-top: 36px; background: var(--bg-2); border: 1px solid var(--line); border-radius: 10px; font: .84rem/1.8 var(--mono); padding: 16px 18px; }
+  .term .p { color: var(--ok); } .term .c { color: var(--cm); } .term .v { color: var(--str); }
+  .term dl { display: grid; grid-template-columns: auto 1fr; column-gap: 16px; }
+  .term dt { color: var(--cm); }
+  .term dd { color: var(--str); }
 
-  /* Hero-Aktionen */
-  .hero-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 22px; }
-  .hero-actions a {
-    flex: 1 1 200px; text-align: center; padding: 14px 16px; border-radius: var(--radius);
-    font-weight: 700; font-size: 0.98rem; text-decoration: none; transition: filter .15s, border-color .15s;
-  }
-  .wa-btn { background: #25d366; color: #0b2e17; }
-  .wa-btn:hover { filter: brightness(1.06); }
-  .ghost-btn { border: 1px solid var(--line); color: var(--ink); }
-  .ghost-btn:hover { border-color: var(--signal); }
-  .hero-actions a:focus-visible { outline: 3px solid #fff; outline-offset: 2px; }
+  section { padding: 56px 0; border-top: 1px solid var(--line); }
+  .mark { font: .8rem var(--mono); color: var(--cm); }
+  .mark b { color: var(--ink-3); font-weight: 500; }
+  h2 { margin-top: 8px; font: 600 1.5rem/1.25 var(--mono); letter-spacing: -.02em; }
+  .sub { margin-top: 4px; color: var(--ink-3); font-size: .95rem; }
 
-  /* Wer dir hilft */
-  .about { display: flex; gap: 18px; align-items: flex-start; margin-top: 20px; }
-  .about img {
-    width: 84px; height: 84px; border-radius: 50%; object-fit: cover; flex-shrink: 0;
-    background: var(--surface-2); border: 1px solid var(--line);
-  }
-  .about p { color: var(--ink-soft); font-size: 0.95rem; }
-  .about p + p { margin-top: 10px; }
-  .safe {
-    margin-top: 18px; display: flex; gap: 12px; align-items: flex-start;
-    background: var(--surface); border: 1px solid var(--line);
-    border-radius: var(--radius); padding: 14px 16px; font-size: 0.9rem; color: var(--ink-soft);
-  }
-  .safe b { color: var(--ink); display: block; margin-bottom: 2px; }
+  .issues { list-style: none; margin-top: 24px; display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .issues li { background: var(--bg-2); border: 1px solid var(--line); border-radius: 8px; padding: 14px 16px; transition: border-color .2s; }
+  .issues li:hover { border-color: #3A404C; }
+  .issues .code { font: .72rem var(--mono); color: var(--warn); display: flex; gap: 6px; align-items: center; }
+  .issues .code::before { content: "⚠"; }
+  .issues li.q .code { color: var(--ty); } .issues li.q .code::before { content: "?"; font-weight: 600; }
+  .issues h3 { margin-top: 4px; font: 500 1rem var(--mono); }
+  .issues p { color: var(--ink-2); font-size: .92rem; }
 
-  /* Section shell */
-  section { padding: 34px 0; border-top: 1px solid var(--line); }
-  .sec-title { font-size: 1.15rem; font-weight: 650; letter-spacing: -0.01em; }
-  .sec-sub { color: var(--ink-mute); font-size: 0.9rem; margin-top: 4px; }
+  .profile { margin-top: 24px; display: grid; grid-template-columns: 120px 1fr; gap: 24px; align-items: start; }
+  .profile img { width: 120px; height: 120px; border-radius: 12px; object-fit: cover; border: 1px solid var(--line); filter: grayscale(.2); background: var(--bg-3); }
+  .profile p { color: var(--ink-2); } .profile p + p { margin-top: 10px; }
+  .profile p:first-child { color: var(--ink); }
+  .secure { margin-top: 24px; border: 1px solid rgba(107,212,154,.3); background: rgba(107,212,154,.06); border-radius: 8px; padding: 14px 16px; }
+  .secure .t { font: 500 .78rem var(--mono); color: var(--ok); }
+  .secure h3 { font: 500 1rem var(--mono); margin-top: 2px; }
+  .secure p { color: var(--ink-2); font-size: .94rem; }
 
-  /* Help with — concrete cases */
-  .cases { display: grid; gap: 10px; margin-top: 20px; }
-  .case {
-    display: flex; gap: 13px; align-items: flex-start;
-    padding: 15px 16px; background: var(--surface);
-    border: 1px solid var(--line); border-radius: var(--radius);
-  }
-  .case .ic { font-size: 1.15rem; line-height: 1.4; flex-shrink: 0; }
-  .case .txt b { font-weight: 600; display: block; font-size: 0.95rem; }
-  .case .txt span { color: var(--ink-soft); font-size: 0.86rem; }
+  .pipe { list-style: none; margin-top: 24px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+  .pipe li { background: var(--bg-2); border: 1px solid var(--line); border-radius: 8px; padding: 14px; }
+  .pipe .s { font: .72rem var(--mono); color: var(--ok); }
+  .pipe li:nth-child(3) { border-color: rgba(240,81,56,.5); }
+  .pipe li:nth-child(3) .s { color: var(--accent-2); }
+  .pipe h3 { margin-top: 6px; font: 500 .95rem/1.3 var(--mono); }
+  .pipe p { margin-top: 6px; color: var(--ink-2); font-size: .86rem; line-height: 1.5; }
 
-  /* Process */
-  .steps { display: grid; gap: 0; margin-top: 20px; }
-  .step {
-    display: flex; gap: 15px; padding: 16px 0;
-    border-bottom: 1px solid var(--line);
-  }
-  .step:last-child { border-bottom: none; }
-  .step .n {
-    flex-shrink: 0; width: 30px; height: 30px; border-radius: 50%;
-    display: grid; place-items: center; font-weight: 650; font-size: 0.85rem;
-    background: var(--surface-2); color: var(--signal); border: 1px solid var(--line);
-  }
-  .step .b b { display: block; font-size: 0.95rem; font-weight: 600; }
-  .step .b span { color: var(--ink-soft); font-size: 0.87rem; }
+  .plans { margin-top: 26px; border: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .plans legend { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+  .plan { position: relative; cursor: pointer; display: block; }
+  .plan input { position: absolute; opacity: 0; pointer-events: none; }
+  .plan .body { height: 100%; display: flex; flex-direction: column; background: var(--bg-2); border: 1px solid var(--line); border-radius: 10px; padding: 18px; transition: border-color .2s, box-shadow .2s; }
+  .plan:hover .body { border-color: #3A404C; }
+  .plan input:checked + .body { border-color: var(--accent); box-shadow: 0 0 0 1px var(--accent), 0 12px 32px -14px rgba(240,81,56,.6); }
+  .plan input:focus-visible + .body { outline: 2px solid var(--accent-2); outline-offset: 3px; }
+  .plan .nm { font: 500 .95rem var(--mono); display: flex; gap: 8px; align-items: center; padding-right: 64px; }
+  .plan .nm::before { content: "○"; color: var(--ink-3); }
+  .plan input:checked + .body .nm::before { content: "●"; color: var(--accent); }
+  .plan .pr { margin-top: 10px; font: 600 1.9rem var(--mono); letter-spacing: -.04em; }
+  .plan .pr small { font-size: .75rem; color: var(--ink-3); font-weight: 400; letter-spacing: 0; margin-left: 4px; }
+  .plan .ds { margin-top: 8px; color: var(--ink-2); font-size: .9rem; line-height: 1.5; }
+  .plan .kd { margin-top: auto; padding-top: 12px; font: .7rem var(--mono); color: var(--cm); }
+  .badge { position: absolute; top: 14px; right: 14px; z-index: 1; font: 500 .66rem var(--mono); color: var(--accent-2); background: rgba(240,81,56,.12); border: 1px solid rgba(240,81,56,.35); border-radius: 4px; padding: 1px 6px; }
 
-  /* Pricing */
-  .plans { display: grid; gap: 12px; margin-top: 20px; }
-  .plan {
-    padding: 18px; background: var(--surface); border: 1px solid var(--line);
-    border-radius: var(--radius); position: relative;
-  }
-  .plan.feature { border-color: var(--signal); }
-  .plan .tag {
-    position: absolute; top: -10px; left: 18px;
-    background: var(--signal); color: var(--signal-ink);
-    font-size: 0.7rem; font-weight: 700; padding: 3px 9px; border-radius: 6px;
-    letter-spacing: 0.02em;
-  }
-  .plan .head {
-    display: flex; justify-content: space-between; align-items: baseline; gap: 10px;
-    padding-left: 30px;
-  }
-  .plan .name { font-weight: 650; font-size: 1.02rem; }
-  .plan .price { font-weight: 700; font-size: 1.05rem; white-space: nowrap; }
-  .plan .desc { color: var(--ink-soft); font-size: 0.87rem; margin-top: 7px; }
-  .plan {
-    cursor: pointer; transition: border-color .15s, background .15s, transform .1s;
-  }
-  .plan:hover { border-color: var(--signal); }
-  .plan:active { transform: scale(0.995); }
-  .plan.selected {
-    border-color: var(--signal);
-    box-shadow: 0 0 0 1px var(--signal) inset;
-    background: rgba(255,176,32,0.06);
-  }
-  .plan .check {
-    position: absolute; top: 18px; left: 16px;
-    width: 20px; height: 20px; border-radius: 50%;
-    border: 2px solid var(--line); display: grid; place-items: center;
-    color: var(--signal-ink); font-size: 0.7rem; font-weight: 800;
-    background: transparent; transition: background .15s, border-color .15s;
-  }
-  .plan.selected .check { background: var(--signal); border-color: var(--signal); }
-  .plan .check::after { content: "✓"; opacity: 0; transition: opacity .15s; }
-  .plan.selected .check::after { opacity: 1; }
-  .plan:focus-visible { outline: 2px solid var(--signal); outline-offset: 2px; }
+  .checkout { margin-top: 26px; }
+  .note { margin-top: 14px; color: var(--ink-3); font-size: .9rem; max-width: 62ch; }
+  .note a { color: var(--accent-2); }
+  .trust { list-style: none; display: flex; flex-wrap: wrap; gap: 6px 18px; margin-top: 12px; font: .74rem var(--mono); color: var(--ink-3); }
+  .trust li::before { content: "✓ "; color: var(--ok); }
 
-  /* CTA */
-  .cta-box { margin-top: 26px; text-align: center; }
-  .btn {
-    display: block; width: 100%; padding: 16px;
-    background: var(--signal); color: var(--signal-ink);
-    border: none; border-radius: var(--radius);
-    font-size: 1.02rem; font-weight: 700; cursor: pointer;
-    text-decoration: none; transition: filter 0.15s ease;
-  }
-  .btn:hover { filter: brightness(1.06); }
-  .btn:focus-visible { outline: 3px solid #fff; outline-offset: 2px; }
-  .btn.disabled {
-    background: var(--surface-2); color: var(--ink-mute);
-    pointer-events: none; cursor: default;
-  }
-  .paynote {
-    margin-top: 12px; font-size: 0.78rem; color: var(--ink-mute); line-height: 1.5;
-  }
-  .trust {
-    display: flex; flex-wrap: wrap; gap: 8px 16px; justify-content: center;
-    margin-top: 16px; font-size: 0.78rem; color: var(--ink-soft);
-  }
-  .trust span { display: inline-flex; align-items: center; gap: 6px; }
+  footer { border-top: 1px solid var(--line); padding: 26px 0 60px; font: .76rem var(--mono); color: var(--ink-3); }
+  footer .wrap { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 20px; }
+  footer a, .linklike { text-decoration: none; color: var(--ink-2); }
+  footer a:hover, .linklike:hover { color: var(--ink); }
+  .linklike { font: inherit; background: none; border: 0; cursor: pointer; padding: 0; }
+  footer .sp { margin-left: auto; }
 
-  /* Footer */
-  footer {
-    padding: 30px 0 40px; border-top: 1px solid var(--line);
-    font-size: 0.82rem; color: var(--ink-mute);
-    display: flex; flex-wrap: wrap; gap: 8px 18px; align-items: center;
-  }
-  footer a { color: var(--ink-soft); text-decoration: none; }
-  footer a:hover { color: var(--ink); }
-  footer .spacer { margin-left: auto; }
+  dialog { max-width: 540px; width: calc(100% - 32px); max-height: calc(100dvh - 48px); margin: auto; background: var(--bg-2); color: var(--ink); border: 1px solid var(--line); border-radius: 10px; padding: 0; box-shadow: 0 30px 80px rgba(0,0,0,.6); }
+  dialog::backdrop { background: rgba(0,0,0,.6); -webkit-backdrop-filter: blur(3px); backdrop-filter: blur(3px); }
+  .dlg-bar { position: sticky; top: 0; display: flex; align-items: center; gap: 10px; padding: 10px 14px; border-bottom: 1px solid var(--line); background: var(--bg); font: .76rem var(--mono); color: var(--ink-3); }
+  .dlg-bar .close { margin-left: auto; width: 32px; height: 32px; border-radius: 6px; background: none; border: 0; color: var(--ink-3); font-size: 1.3rem; line-height: 1; cursor: pointer; }
+  .dlg-bar .close:hover { background: var(--bg-3); color: var(--ink); }
+  .dlg-body { padding: 20px 22px 24px; }
+  dialog h2 { margin: 0 0 6px; font-size: 1.2rem; }
+  dialog dt, dialog h3 { font: 500 .74rem var(--mono); color: var(--cm); margin-top: 14px; }
+  dialog dd { color: var(--ink); font-size: .95rem; }
+  dialog p { color: var(--ink-2); font-size: .93rem; }
+  dialog a { color: var(--accent-2); }
+  dialog .stand { margin-top: 18px; font: .74rem var(--mono); color: var(--cm); }
 
-  /* Modal */
-  dialog {
-    max-width: 520px; width: calc(100% - 40px); margin: auto;
-    background: var(--surface); color: var(--ink);
-    border: 1px solid var(--line); border-radius: var(--radius);
-    padding: 24px;
+  @media (prefers-reduced-motion: no-preference) {
+    .js .rv { opacity: 0; transform: translateY(12px); transition: opacity .6s, transform .6s cubic-bezier(.2,.7,.2,1); }
+    .js .rv.in { opacity: 1; transform: none; }
   }
-  dialog::backdrop { background: rgba(0,0,0,0.6); }
-  dialog h3 { font-size: 1.1rem; margin-bottom: 14px; }
-  dialog p { font-size: 0.86rem; color: var(--ink-soft); margin-bottom: 10px; }
-  dialog b { color: var(--ink); }
-  dialog .close {
-    position: absolute; top: 16px; right: 18px; background: none; border: none;
-    color: var(--ink-mute); font-size: 1.4rem; cursor: pointer;
+  @media (prefers-reduced-motion: reduce) { *, *::before { animation: none !important; transition: none !important; } html { scroll-behavior: auto; } }
+  @media (max-width: 640px) {
+    .lights, .scheme .meta-txt { display: none; }
+    header .wrap { gap: 10px; }
+    .hero { padding: 44px 0 44px; }
+    .issues, .plans, .pipe { grid-template-columns: 1fr; }
+    .profile { grid-template-columns: 1fr; }
+    .btn { width: 100%; justify-content: center; }
   }
-  a.link { color: var(--signal); text-decoration: none; }
+  @media (max-width: 400px) { .status span { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; } }
+  @media (min-width: 641px) and (max-width: 780px) { .pipe { grid-template-columns: 1fr 1fr; } }
 </style>
+<script>document.documentElement.classList.add("js");</script>
 </head>
 <body>
+<a class="skip" href="#main" data-i18n="skip">Zum Inhalt springen</a>
 
-<div class="wrap">
-  <header>
-    <div class="brandrow">
-      <img src="https://bszy.dev/bszy_main.jpg" alt="BSZY">
-      <div>
-        <div class="brandname">help.bszy.dev</div>
-        <div class="brandmeta">Balint · Effingen AG</div>
-      </div>
-      <div class="status" id="status"><span class="dot"></span><span id="statusText">Erreichbar</span></div>
-      <div class="langswitch" role="group" aria-label="Sprache / Language">
-        <button type="button" data-lang="de">DE</button>
-        <button type="button" data-lang="en">EN</button>
-      </div>
+<header>
+  <div class="wrap">
+    <div class="lights" aria-hidden="true"><i></i><i></i><i></i></div>
+    <a class="scheme" href="https://bszy.dev" aria-label="bszy.dev"><img src="https://bszy.dev/bszy_main.jpg" alt=""><b>help.bszy.dev</b><span class="meta-txt"> › Effingen AG</span></a>
+    <span class="status" id="status" role="status"><span id="statusText">Erreichbar</span></span>
+    <div class="langswitch" role="group" aria-label="Sprache / Language">
+      <button type="button" data-lang="de" aria-pressed="true">DE</button>
+      <button type="button" data-lang="en" aria-pressed="false">EN</button>
     </div>
-  </header>
+  </div>
+</header>
 
+<main class="wrap" id="main">
   <div class="hero">
-    <h1 data-i18n="hero_title">Dein Computer streikt? Ich helf dir — persönlich aus Effingen.</h1>
-    <p data-i18n="hero_sub">IT-Support für Privatpersonen in Effingen, der Region Brugg und im Fricktal: Mac, PC, iPhone, WLAN und der ganze Alltagskram. Ist dein Problem lösbar, lösen wir es. Ist es das nicht, sag ich dir das offen — bevor Kosten entstehen.</p>
-    <div class="hero-actions">
-      <a class="wa-btn" href="https://wa.me/41790000000" target="_blank" rel="noopener" data-i18n="hero_wa">Auf WhatsApp schreiben</a>
-      <a class="ghost-btn" href="#pakete" data-i18n="hero_plans">Pakete &amp; Preise</a>
+    <p class="path rv">~/support/<span>effingen</span> — Brugg &amp; Fricktal</p>
+    <h1 class="rv"><span data-i18n="hero_a">Dein Computer streikt?</span> <span class="hl" data-i18n="hero_b">Ich helf dir — persönlich aus Effingen.</span><span class="cursor" aria-hidden="true"></span></h1>
+    <p class="lede rv" data-i18n="hero_sub">IT-Support für Privatpersonen in Effingen, der Region Brugg und im Fricktal: Mac, PC, iPhone, WLAN und der ganze Alltagskram. Ist dein Problem lösbar, lösen wir es. Ist es das nicht, sag ich dir das offen — bevor Kosten entstehen.</p>
+    <div class="actions rv">
+      <a class="btn" href="https://wa.me/41790000000" target="_blank" rel="noopener"><span data-i18n="hero_wa">Auf WhatsApp schreiben</span> <kbd aria-hidden="true">↵</kbd></a>
+      <a class="btn ghost" href="#pakete" data-i18n="hero_plans">Pakete &amp; Preise ↓</a>
     </div>
-    <div class="response-badge">⏱ <span data-i18n="hero_badge">Antwort am selben Tag · Termine abends &amp; samstags</span></div>
+    <div class="term rv">
+      <div aria-hidden="true"><span class="p">$</span> support --hours</div>
+      <dl>
+        <dt data-i18n="h_week">Mo–Fr</dt><dd>18:00–21:00</dd>
+        <dt data-i18n="h_sat">Sa</dt><dd>09:00–17:00</dd>
+      </dl>
+      <div class="c"># <span data-i18n="hero_badge">Antwort am selben Tag · Termine abends &amp; samstags</span></div>
+    </div>
   </div>
 
-  <section>
-    <div class="sec-title" data-i18n="cases_title">Womit ich helfe</div>
-    <div class="sec-sub" data-i18n="cases_sub">Ein paar typische Fälle — deiner ist nicht dabei? Frag einfach.</div>
-    <div class="cases">
-      <div class="case"><span class="ic">💻</span><div class="txt"><b data-i18n="case_1_h">Mac & PC</b><span data-i18n="case_1_b">Langsam, hängt, startet nicht, Updates, Einrichtung</span></div></div>
-      <div class="case"><span class="ic">📱</span><div class="txt"><b data-i18n="case_2_h">iPhone & iPad</b><span data-i18n="case_2_b">Backup, Umzug auf neues Gerät, iCloud, Speicher voll</span></div></div>
-      <div class="case"><span class="ic">📶</span><div class="txt"><b data-i18n="case_3_h">WLAN & Netzwerk</b><span data-i18n="case_3_b">Kein Internet, schwaches Signal, Router einrichten</span></div></div>
-      <div class="case"><span class="ic">🔐</span><div class="txt"><b data-i18n="case_4_h">Konten & Passwörter</b><span data-i18n="case_4_b">Ausgesperrt, 2-Faktor, E-Mail einrichten</span></div></div>
-      <div class="case"><span class="ic">💾</span><div class="txt"><b data-i18n="case_5_h">Daten & Backup</b><span data-i18n="case_5_b">Fotos sichern, gelöschtes retten, Backup aufsetzen</span></div></div>
-    </div>
+  <section aria-labelledby="h-cases">
+    <p class="mark rv">// MARK: - <b data-i18n="m_cases">Fälle</b></p>
+    <h2 id="h-cases" class="rv" data-i18n="cases_title">Womit ich helfe</h2>
+    <p class="sub rv" data-i18n="cases_sub">Ein paar typische Fälle — deiner ist nicht dabei? Frag einfach.</p>
+    <ul class="issues">
+      <li class="rv"><span class="code" aria-hidden="true">ERR_SLOW</span><h3 data-i18n="case_1_h">Mac &amp; PC</h3><p data-i18n="case_1_b">Langsam, hängt, startet nicht, Updates, Einrichtung</p></li>
+      <li class="rv"><span class="code" aria-hidden="true">ERR_STORAGE_FULL</span><h3 data-i18n="case_2_h">iPhone &amp; iPad</h3><p data-i18n="case_2_b">Backup, Umzug auf neues Gerät, iCloud, Speicher voll</p></li>
+      <li class="rv"><span class="code" aria-hidden="true">ERR_NO_INTERNET</span><h3 data-i18n="case_3_h">WLAN &amp; Netzwerk</h3><p data-i18n="case_3_b">Kein Internet, schwaches Signal, Router einrichten</p></li>
+      <li class="rv"><span class="code" aria-hidden="true">ERR_LOCKED_OUT</span><h3 data-i18n="case_4_h">Konten &amp; Passwörter</h3><p data-i18n="case_4_b">Ausgesperrt, 2-Faktor, E-Mail einrichten</p></li>
+      <li class="rv"><span class="code" aria-hidden="true">ERR_DATA_LOST</span><h3 data-i18n="case_5_h">Daten &amp; Backup</h3><p data-i18n="case_5_b">Fotos sichern, gelöschtes retten, Backup aufsetzen</p></li>
+      <li class="rv q"><span class="code" aria-hidden="true">UNKNOWN</span><h3 data-i18n="case_6_h">Etwas anderes?</h3><p data-i18n="case_6_b">Schreib mir kurz, worum es geht — ich sag dir ehrlich, ob ich helfen kann.</p></li>
+    </ul>
   </section>
 
-  <section>
-    <div class="sec-title" data-i18n="about_title">Wer dir hilft</div>
-    <div class="about">
-      <img src="balint.jpg" alt="Balint, IT-Hilfe aus Effingen" width="84" height="84">
+  <section aria-labelledby="h-about">
+    <p class="mark rv">// MARK: - <b data-i18n="m_about">Person</b></p>
+    <h2 id="h-about" class="rv" data-i18n="about_title">Wer dir hilft</h2>
+    <div class="profile rv">
+      <img src="https://help.bszy.dev/balint.jpg" alt="Balint, IT-Hilfe aus Effingen" data-i18n-alt="about_alt" width="120" height="120">
       <div>
         <p data-i18n="about_1">Ich bin Balint aus Effingen. Beruflich arbeite ich in der IT, abends und am Samstag helfe ich Privatpersonen aus der Region bei allem, was mit Computer, Handy und Internet zu tun hat.</p>
         <p data-i18n="about_2">Ich erkläre verständlich, ohne Fachchinesisch, und mache nur, was wir vorher besprochen haben.</p>
       </div>
     </div>
-    <div class="safe"><span>🛡</span><div><b data-i18n="safe_h">Fernzugriff nur mit deiner Zustimmung</b><span data-i18n="safe_b">Du siehst auf deinem Bildschirm alles, was ich mache, und kannst die Verbindung jederzeit mit einem Klick trennen.</span></div></div>
+    <aside class="secure rv">
+      <div class="t" aria-hidden="true">🔒 secure: true</div>
+      <h3 data-i18n="safe_h">Fernzugriff nur mit deiner Zustimmung</h3>
+      <p data-i18n="safe_b">Du siehst auf deinem Bildschirm alles, was ich mache, und kannst die Verbindung jederzeit mit einem Klick trennen.</p>
+    </aside>
   </section>
 
-  <section>
-    <div class="sec-title" data-i18n="steps_title">So läuft's ab</div>
-    <div class="steps">
-      <div class="step"><span class="n">1</span><div class="b"><b data-i18n="step_1_h">Paket wählen</b><span data-i18n="step_1_b">Remote vorab bezahlen (TWINT oder Kreditkarte via Stripe) — vor Ort einfach anfragen</span></div></div>
-      <div class="step"><span class="n">2</span><div class="b"><b data-i18n="step_2_h">Ich melde mich</b><span data-i18n="step_2_b">Am selben Tag per WhatsApp oder E-Mail, mit einem Terminvorschlag</span></div></div>
-      <div class="step"><span class="n">3</span><div class="b"><b data-i18n="step_3_h">Ehrliche Einschätzung zuerst</b><span data-i18n="step_3_b">Ich sag dir, ob und wie ich helfen kann — bevor weitere Kosten entstehen</span></div></div>
-      <div class="step"><span class="n">4</span><div class="b"><b data-i18n="step_4_h">Wir lösen dein Problem</b><span data-i18n="step_4_b">Abrechnung nach effektivem Aufwand — keine versteckten Kosten</span></div></div>
-    </div>
+  <section aria-labelledby="h-steps">
+    <p class="mark rv">// MARK: - <b data-i18n="m_steps">Ablauf</b></p>
+    <h2 id="h-steps" class="rv" data-i18n="steps_title">So läuft's ab</h2>
+    <ol class="pipe">
+      <li class="rv"><span class="s" aria-hidden="true">step 1</span><h3 data-i18n="step_1_h">Paket wählen</h3><p data-i18n="step_1_b">Remote vorab bezahlen (TWINT oder Kreditkarte via Stripe) — vor Ort einfach anfragen</p></li>
+      <li class="rv"><span class="s" aria-hidden="true">step 2</span><h3 data-i18n="step_2_h">Ich melde mich</h3><p data-i18n="step_2_b">Am selben Tag per WhatsApp oder E-Mail, mit einem Terminvorschlag</p></li>
+      <li class="rv"><span class="s" aria-hidden="true">step 3</span><h3 data-i18n="step_3_h">Ehrliche Einschätzung zuerst</h3><p data-i18n="step_3_b">Ich sag dir, ob und wie ich helfen kann — bevor weitere Kosten entstehen</p></li>
+      <li class="rv"><span class="s" aria-hidden="true">step 4</span><h3 data-i18n="step_4_h">Wir lösen dein Problem</h3><p data-i18n="step_4_b">Abrechnung nach effektivem Aufwand — keine versteckten Kosten</p></li>
+    </ol>
   </section>
 
-  <section id="pakete">
-    <div class="sec-title" data-i18n="plans_title">Pakete</div>
-    <div class="sec-sub" data-i18n="plans_sub">Alle Preise in CHF. Als Kleinunternehmen ohne MwSt.-Ausweis.</div>
-    <div class="plans">
-      <div class="plan" tabindex="0" role="button" aria-pressed="false"
-           data-name-key="plan_1_name" data-price="39 CHF"
-           data-url="https://buy.stripe.com/14A14n0O61wl3sI5Nw1Fe00">
-        <span class="check"></span>
-        <div class="head"><span class="name" data-i18n="plan_1_name">Schnellberatung</span><span class="price">39 CHF</span></div>
-        <div class="desc" data-i18n="plan_1_desc">Remote, bis 15 Min. Eine konkrete Frage, eine klare Antwort. Pauschal, kurz &amp; direkt.</div>
-      </div>
-      <div class="plan feature selected" tabindex="0" role="button" aria-pressed="true"
-           data-name-key="plan_2_name" data-price="79 CHF"
-           data-url="https://buy.stripe.com/3cI28rgN4grf8N2gsa1Fe03">
-        <span class="check"></span>
-        <span class="tag" data-i18n="plan_popular">BELIEBT</span>
-        <div class="head"><span class="name" data-i18n="plan_2_name">Remote-Support</span><span class="price">79 CHF</span></div>
-        <div class="desc" data-i18n="plan_2_desc">Bis 30 Min. per Fernzugriff. Dauert's länger, sag ich vorher Bescheid und rechne mit 110 CHF/h pro angefangene 15 Min. ab — nie ohne Vorwarnung.</div>
-      </div>
-      <div class="plan" tabindex="0" role="button" aria-pressed="false"
-           data-name-key="plan_3_name" data-price="110 CHF/h"
-           data-url="mailto:support@bszy.dev?subject=Anfrage%3A%20Remote-Support%20nach%20Aufwand%20(110%20CHF%2Fh)&body=Hallo%20Balint%2C%0A%0Aich%20m%C3%B6chte%20Remote-Support%20nach%20Aufwand%20(110%20CHF%2Fh)%20anfragen.%0A%0AMein%20Anliegen%3A%0A%0A%0AName%3A%0AErreichbar%20per%20(Tel%2FWhatsApp%2FE-Mail)%3A%0A%0ADanke%20und%20Gruss">
-        <span class="check"></span>
-        <div class="head"><span class="name" data-i18n="plan_3_name">Remote nach Aufwand</span><span class="price">110 CHF/h</span></div>
-        <div class="desc" data-i18n="plan_3_desc">Für grössere Sachen per Fernzugriff. 1 Stunde im Voraus, weiterer Aufwand vorher besprochen und pro angefangene 15 Min. abgerechnet.</div>
-      </div>
-      <div class="plan" tabindex="0" role="button" aria-pressed="false"
-           data-name-key="plan_4_name" data-price="130 CHF/h"
-           data-url="mailto:support@bszy.dev?subject=Anfrage%3A%20Vor-Ort-Support%20(130%20CHF%2Fh)&body=Hallo%20Balint%2C%0A%0Aich%20m%C3%B6chte%20Vor-Ort-Support%20(130%20CHF%2Fh)%20anfragen.%0A%0AMein%20Anliegen%3A%0A%0A%0AAdresse%20(f%C3%BCr%20die%20Anfahrt)%3A%0AName%3A%0AErreichbar%20per%20(Tel%2FWhatsApp%2FE-Mail)%3A%0AWunschtermin%3A%0A%0ADanke%20und%20Gruss">
-        <span class="check"></span>
-        <div class="head"><span class="name" data-i18n="plan_4_name">Vor Ort</span><span class="price">130 CHF/h</span></div>
-        <div class="desc" data-i18n="plan_4_desc">Mindestens 1 Stunde, danach pro angefangene 15 Min. Bezahlung vor Ort per TWINT oder Rechnung. Anfahrt: bis 10 km gratis · 10–25 km +20 CHF · 25–40 km +35 CHF · &gt;40 km nach Absprache.</div>
-      </div>
-    </div>
+  <section id="pakete" aria-labelledby="h-plans">
+    <p class="mark rv">// MARK: - <b data-i18n="m_plans">Preise</b></p>
+    <h2 id="h-plans" class="rv" data-i18n="plans_title">Pakete</h2>
+    <p class="sub rv" data-i18n="plans_sub">Alle Preise in CHF. Als Kleinunternehmen ohne MwSt.-Ausweis.</p>
+    <fieldset class="plans">
+      <legend data-i18n="plans_legend">Paket auswählen</legend>
 
-    <div class="cta-box">
-      <a class="btn" href="https://buy.stripe.com/3cI28rgN4grf8N2gsa1Fe03" target="_blank" rel="noopener" id="ctaBtn">Remote-Support buchen — 79 CHF</a>
-      <div class="paynote"><span data-i18n="cta_note">Remote: Zahlung vor Leistung via Stripe. Vor Ort: TWINT oder Rechnung nach dem Einsatz. Keine Garantie auf vollständige Lösung — du bekommst immer zuerst eine ehrliche Einschätzung. Fragen vorab:</span> <a class="link" href="mailto:support@bszy.dev">support@bszy.dev</a></div>
-      <div class="trust">
-        <span data-i18n="trust_1">🔒 SSL-verschlüsselt</span>
-        <span data-i18n="trust_2">💳 TWINT & Kreditkarte</span>
-        <span data-i18n="trust_3">🚫 Kein Abo</span>
-      </div>
+      <label class="plan rv">
+        <input type="radio" name="plan" data-name-key="plan_1_name" data-price="39 CHF" data-url="https://buy.stripe.com/14A14n0O61wl3sI5Nw1Fe00">
+        <span class="body"><span class="nm" data-i18n="plan_1_name">Schnellberatung</span><span class="pr">39<small>CHF</small></span><span class="ds" data-i18n="plan_1_desc">Remote, bis 15 Min. Eine konkrete Frage, eine klare Antwort. Pauschal, kurz &amp; direkt.</span><span class="kd" data-i18n="kind_remote_pay">remote · vorab bezahlen</span></span>
+      </label>
+
+      <label class="plan rv">
+        <span class="badge" data-i18n="plan_popular">BELIEBT</span>
+        <input type="radio" name="plan" checked data-name-key="plan_2_name" data-price="79 CHF" data-url="https://buy.stripe.com/3cI28rgN4grf8N2gsa1Fe03">
+        <span class="body"><span class="nm" data-i18n="plan_2_name">Remote-Support</span><span class="pr">79<small>CHF</small></span><span class="ds" data-i18n="plan_2_desc">Bis 30 Min. per Fernzugriff. Dauert's länger, sag ich vorher Bescheid und rechne mit 110 CHF/h pro angefangene 15 Min. ab — nie ohne Vorwarnung.</span><span class="kd" data-i18n="kind_remote_pay">remote · vorab bezahlen</span></span>
+      </label>
+
+      <label class="plan rv">
+        <input type="radio" name="plan" data-name-key="plan_3_name" data-price="110 CHF/h" data-url="mailto:support@bszy.dev?subject=Anfrage%3A%20Remote-Support%20nach%20Aufwand%20(110%20CHF%2Fh)&body=Hallo%20Balint%2C%0A%0Aich%20m%C3%B6chte%20Remote-Support%20nach%20Aufwand%20(110%20CHF%2Fh)%20anfragen.%0A%0AMein%20Anliegen%3A%0A%0A%0AName%3A%0AErreichbar%20per%20(Tel%2FWhatsApp%2FE-Mail)%3A%0A%0ADanke%20und%20Gruss">
+        <span class="body"><span class="nm" data-i18n="plan_3_name">Remote nach Aufwand</span><span class="pr">110<small>CHF/h</small></span><span class="ds" data-i18n="plan_3_desc">Für grössere Sachen per Fernzugriff. 1 Stunde im Voraus, weiterer Aufwand vorher besprochen und pro angefangene 15 Min. abgerechnet.</span><span class="kd" data-i18n="kind_remote_req">remote · per E-Mail anfragen</span></span>
+      </label>
+
+      <label class="plan rv">
+        <input type="radio" name="plan" data-name-key="plan_4_name" data-price="130 CHF/h" data-url="mailto:support@bszy.dev?subject=Anfrage%3A%20Vor-Ort-Support%20(130%20CHF%2Fh)&body=Hallo%20Balint%2C%0A%0Aich%20m%C3%B6chte%20Vor-Ort-Support%20(130%20CHF%2Fh)%20anfragen.%0A%0AMein%20Anliegen%3A%0A%0A%0AAdresse%20(f%C3%BCr%20die%20Anfahrt)%3A%0AName%3A%0AErreichbar%20per%20(Tel%2FWhatsApp%2FE-Mail)%3A%0AWunschtermin%3A%0A%0ADanke%20und%20Gruss">
+        <span class="body"><span class="nm" data-i18n="plan_4_name">Vor Ort</span><span class="pr">130<small>CHF/h</small></span><span class="ds" data-i18n="plan_4_desc">Mindestens 1 Stunde, danach pro angefangene 15 Min. Bezahlung vor Ort per TWINT oder Rechnung. Anfahrt: bis 10 km gratis · 10–25 km +20 CHF · 25–40 km +35 CHF · &gt;40 km nach Absprache.</span><span class="kd" data-i18n="kind_onsite_req">vor Ort · per E-Mail anfragen</span></span>
+      </label>
+    </fieldset>
+
+    <div class="checkout rv">
+      <a class="btn" id="ctaBtn" href="https://buy.stripe.com/3cI28rgN4grf8N2gsa1Fe03" target="_blank" rel="noopener">Remote-Support buchen — 79 CHF</a>
+      <p class="note"><span data-i18n="cta_note">Remote: Zahlung vor Leistung via Stripe. Vor Ort: TWINT oder Rechnung nach dem Einsatz. Keine Garantie auf vollständige Lösung — du bekommst immer zuerst eine ehrliche Einschätzung. Fragen vorab:</span> <a href="mailto:support@bszy.dev">support@bszy.dev</a></p>
+      <ul class="trust"><li data-i18n="trust_1">SSL-verschlüsselt</li><li data-i18n="trust_2">TWINT &amp; Kreditkarte</li><li data-i18n="trust_3">Kein Abo</li></ul>
     </div>
   </section>
+</main>
 
-  <footer>
+<footer>
+  <div class="wrap">
     <span>© 2026 BSZY</span>
     <a href="https://bszy.dev">bszy.dev ↗</a>
-    <span class="spacer"></span>
-    <a href="#" onclick="document.getElementById('imp').showModal();return false;" data-i18n="foot_imp">Impressum</a>
-    <a href="#" onclick="document.getElementById('agb').showModal();return false;" data-i18n="foot_agb">AGB</a>
-  </footer>
-</div>
+    <span class="sp"></span>
+    <button type="button" class="linklike" data-open="imp" data-i18n="foot_imp">Impressum</button>
+    <button type="button" class="linklike" data-open="agb" data-i18n="foot_agb">AGB</button>
+  </div>
+</footer>
 
-<dialog id="imp">
-  <button class="close" onclick="document.getElementById('imp').close()">×</button>
-  <h3 data-i18n="imp_title">Impressum</h3>
-  <p><b data-i18n="imp_provider">Anbieter</b><br>Balint Szikszay · <span data-i18n="imp_sole">Einzelunternehmen</span></p>
-  <p><b data-i18n="imp_address">Adresse</b><br>Dorfstrasse 451, 5078 Effingen, <span data-i18n="imp_country">Schweiz</span></p>
-  <p><b data-i18n="imp_contact">Kontakt</b><br><a class="link" href="mailto:hello@bszy.dev">hello@bszy.dev</a></p>
-  <p><b data-i18n="imp_disc_h">Haftungsausschluss</b><br><span data-i18n="imp_disc_b">Alle Angaben ohne Gewähr.</span></p>
+<dialog id="imp" aria-labelledby="imp-title">
+  <div class="dlg-bar"><span>Impressum.swift</span><button type="button" class="close" data-close aria-label="Schliessen">×</button></div>
+  <div class="dlg-body">
+    <h2 id="imp-title" data-i18n="imp_title">Impressum</h2>
+    <dl>
+      <dt data-i18n="imp_provider">// Anbieter</dt>
+      <dd>Balint Szikszay · <span data-i18n="imp_sole">Einzelunternehmen</span></dd>
+      <dt data-i18n="imp_address">// Adresse</dt>
+      <dd>Dorfstrasse 451, 5078 Effingen, <span data-i18n="imp_country">Schweiz</span></dd>
+      <dt data-i18n="imp_contact">// Kontakt</dt>
+      <dd><a href="mailto:hello@bszy.dev">hello@bszy.dev</a></dd>
+      <dt data-i18n="imp_disc_h">// Haftungsausschluss</dt>
+      <dd data-i18n="imp_disc_b">Alle Angaben ohne Gewähr.</dd>
+    </dl>
+  </div>
 </dialog>
 
-<dialog id="agb">
-  <button class="close" onclick="document.getElementById('agb').close()">×</button>
-  <h3 data-i18n="agb_title">Allgemeine Geschäftsbedingungen</h3>
-  <p data-i18n="agb_1"><b>1. Anbieter</b> Balint Szikszay, Einzelunternehmen, Dorfstrasse 451, 5078 Effingen. Kontakt: hello@bszy.dev</p>
-  <p data-i18n="agb_2"><b>2. Leistungen</b> Persönliche IT-Support-Dienstleistungen: Schnellberatung remote (39 CHF, bis 15 Min.), Remote-Support (79 CHF, bis 30 Min.), Remote nach Aufwand (110 CHF/h) und Vor-Ort (130 CHF/h, mind. 1 Stunde, zzgl. Anfahrt). Zusätzlicher Aufwand wird pro angefangene 15 Min. abgerechnet.</p>
-  <p data-i18n="agb_3"><b>3. Zahlung</b> Alle Preise in CHF. Remote-Leistungen: Zahlung vor Leistung via Stripe (Kreditkarte, Apple Pay, Google Pay, TWINT); mit Abschluss kommt der Vertrag zustande. Vor-Ort-Einsätze: Zahlung nach dem Einsatz per TWINT oder Rechnung (zahlbar innert 10 Tagen).</p>
-  <p data-i18n="agb_4"><b>4. Rückerstattung</b> Pauschalpakete sind nach erbrachter Leistung nicht rückerstattbar. Beim Stundenpaket wird 1 Stunde im Voraus verrechnet; weiterer Aufwand wird vorab kommuniziert.</p>
-  <p data-i18n="agb_5"><b>5. Haftung</b> Keine Garantie auf vollständige Problemlösung. Haftung begrenzt auf den bezahlten Betrag.</p>
-  <p data-i18n="agb_6"><b>6. Datenschutz</b> Personendaten werden nur zur Abwicklung genutzt und nicht an Dritte weitergegeben. Zahlungen laufen über Stripe.</p>
-  <p data-i18n="agb_7"><b>7. Recht</b> Schweizer Recht. Gerichtsstand: Effingen AG.</p>
-  <p style="color:var(--ink-mute);margin-top:14px;" data-i18n="agb_stand">Stand: Oktober 2026 · hello@bszy.dev</p>
+<dialog id="agb" aria-labelledby="agb-title">
+  <div class="dlg-bar"><span>AGB.swift</span><button type="button" class="close" data-close aria-label="Schliessen">×</button></div>
+  <div class="dlg-body">
+    <h2 id="agb-title" data-i18n="agb_title">Allgemeine Geschäftsbedingungen</h2>
+    <h3 data-i18n="agb_1_h">// 1. Anbieter</h3><p data-i18n="agb_1">Balint Szikszay, Einzelunternehmen, Dorfstrasse 451, 5078 Effingen. Kontakt: hello@bszy.dev</p>
+    <h3 data-i18n="agb_2_h">// 2. Leistungen</h3><p data-i18n="agb_2">Persönliche IT-Support-Dienstleistungen: Schnellberatung remote (39 CHF, bis 15 Min.), Remote-Support (79 CHF, bis 30 Min.), Remote nach Aufwand (110 CHF/h) und Vor-Ort (130 CHF/h, mind. 1 Stunde, zzgl. Anfahrt). Zusätzlicher Aufwand wird pro angefangene 15 Min. abgerechnet.</p>
+    <h3 data-i18n="agb_3_h">// 3. Zahlung</h3><p data-i18n="agb_3">Alle Preise in CHF. Remote-Leistungen: Zahlung vor Leistung via Stripe (Kreditkarte, Apple Pay, Google Pay, TWINT); mit Abschluss kommt der Vertrag zustande. Vor-Ort-Einsätze: Zahlung nach dem Einsatz per TWINT oder Rechnung (zahlbar innert 10 Tagen).</p>
+    <h3 data-i18n="agb_4_h">// 4. Rückerstattung</h3><p data-i18n="agb_4">Pauschalpakete sind nach erbrachter Leistung nicht rückerstattbar. Beim Stundenpaket wird 1 Stunde im Voraus verrechnet; weiterer Aufwand wird vorab kommuniziert.</p>
+    <h3 data-i18n="agb_5_h">// 5. Haftung</h3><p data-i18n="agb_5">Keine Garantie auf vollständige Problemlösung. Haftung begrenzt auf den bezahlten Betrag.</p>
+    <h3 data-i18n="agb_6_h">// 6. Datenschutz</h3><p data-i18n="agb_6">Personendaten werden nur zur Abwicklung genutzt und nicht an Dritte weitergegeben. Zahlungen laufen über Stripe.</p>
+    <h3 data-i18n="agb_7_h">// 7. Recht</h3><p data-i18n="agb_7">Schweizer Recht. Gerichtsstand: Effingen AG.</p>
+    <p class="stand" data-i18n="agb_stand">Stand: Oktober 2026 · hello@bszy.dev</p>
+  </div>
 </dialog>
 
 <script>
   var I18N = {
     de: {
-      hero_title: "Dein Computer streikt? Ich helf dir — persönlich aus Effingen.",
+      skip: "Zum Inhalt springen",
+      m_cases: "Fälle", m_about: "Person", m_steps: "Ablauf", m_plans: "Preise",
+      hero_a: "Dein Computer streikt?",
+      hero_b: "Ich helf dir — persönlich aus Effingen.",
       hero_sub: "IT-Support für Privatpersonen in Effingen, der Region Brugg und im Fricktal: Mac, PC, iPhone, WLAN und der ganze Alltagskram. Ist dein Problem lösbar, lösen wir es. Ist es das nicht, sag ich dir das offen — bevor Kosten entstehen.",
-      hero_wa: "Auf WhatsApp schreiben", hero_plans: "Pakete & Preise",
+      hero_wa: "Auf WhatsApp schreiben", hero_plans: "Pakete & Preise ↓",
+      h_week: "Mo–Fr", h_sat: "Sa",
       hero_badge: "Antwort am selben Tag · Termine abends & samstags",
-      about_title: "Wer dir hilft",
-      about_1: "Ich bin Balint aus Effingen. Beruflich arbeite ich in der IT, abends und am Samstag helfe ich Privatpersonen aus der Region bei allem, was mit Computer, Handy und Internet zu tun hat.",
-      about_2: "Ich erkläre verständlich, ohne Fachchinesisch, und mache nur, was wir vorher besprochen haben.",
-      safe_h: "Fernzugriff nur mit deiner Zustimmung",
-      safe_b: "Du siehst auf deinem Bildschirm alles, was ich mache, und kannst die Verbindung jederzeit mit einem Klick trennen.",
-      status_on: "Erreichbar",
-      status_off: "Nicht erreichbar",
+      status_on: "Jetzt erreichbar", status_off: "Gerade offline",
       cases_title: "Womit ich helfe",
       cases_sub: "Ein paar typische Fälle — deiner ist nicht dabei? Frag einfach.",
       case_1_h: "Mac & PC", case_1_b: "Langsam, hängt, startet nicht, Updates, Einrichtung",
@@ -404,49 +332,54 @@
       case_3_h: "WLAN & Netzwerk", case_3_b: "Kein Internet, schwaches Signal, Router einrichten",
       case_4_h: "Konten & Passwörter", case_4_b: "Ausgesperrt, 2-Faktor, E-Mail einrichten",
       case_5_h: "Daten & Backup", case_5_b: "Fotos sichern, gelöschtes retten, Backup aufsetzen",
+      case_6_h: "Etwas anderes?", case_6_b: "Schreib mir kurz, worum es geht — ich sag dir ehrlich, ob ich helfen kann.",
+      about_title: "Wer dir hilft",
+      about_alt: "Balint, IT-Hilfe aus Effingen",
+      about_1: "Ich bin Balint aus Effingen. Beruflich arbeite ich in der IT, abends und am Samstag helfe ich Privatpersonen aus der Region bei allem, was mit Computer, Handy und Internet zu tun hat.",
+      about_2: "Ich erkläre verständlich, ohne Fachchinesisch, und mache nur, was wir vorher besprochen haben.",
+      safe_h: "Fernzugriff nur mit deiner Zustimmung",
+      safe_b: "Du siehst auf deinem Bildschirm alles, was ich mache, und kannst die Verbindung jederzeit mit einem Klick trennen.",
       steps_title: "So läuft's ab",
       step_1_h: "Paket wählen", step_1_b: "Remote vorab bezahlen (TWINT oder Kreditkarte via Stripe) — vor Ort einfach anfragen",
       step_2_h: "Ich melde mich", step_2_b: "Am selben Tag per WhatsApp oder E-Mail, mit einem Terminvorschlag",
       step_3_h: "Ehrliche Einschätzung zuerst", step_3_b: "Ich sag dir, ob und wie ich helfen kann — bevor weitere Kosten entstehen",
       step_4_h: "Wir lösen dein Problem", step_4_b: "Abrechnung nach effektivem Aufwand — keine versteckten Kosten",
-      plans_title: "Pakete",
+      plans_title: "Pakete", plans_legend: "Paket auswählen",
       plans_sub: "Alle Preise in CHF. Als Kleinunternehmen ohne MwSt.-Ausweis.",
       plan_popular: "BELIEBT",
+      kind_remote_pay: "remote · vorab bezahlen", kind_remote_req: "remote · per E-Mail anfragen", kind_onsite_req: "vor Ort · per E-Mail anfragen",
       plan_1_name: "Schnellberatung", plan_1_desc: "Remote, bis 15 Min. Eine konkrete Frage, eine klare Antwort. Pauschal, kurz & direkt.",
       plan_2_name: "Remote-Support", plan_2_desc: "Bis 30 Min. per Fernzugriff. Dauert's länger, sag ich vorher Bescheid und rechne mit 110 CHF/h pro angefangene 15 Min. ab — nie ohne Vorwarnung.",
       plan_3_name: "Remote nach Aufwand", plan_3_desc: "Für grössere Sachen per Fernzugriff. 1 Stunde im Voraus, weiterer Aufwand vorher besprochen und pro angefangene 15 Min. abgerechnet.",
       plan_4_name: "Vor Ort", plan_4_desc: "Mindestens 1 Stunde, danach pro angefangene 15 Min. Bezahlung vor Ort per TWINT oder Rechnung. Anfahrt: bis 10 km gratis · 10–25 km +20 CHF · 25–40 km +35 CHF · >40 km nach Absprache.",
-      cta_btn: "Remote-Support buchen — 79 CHF",
       cta_book: "{name} buchen — {price}",
       cta_request: "{name} anfragen — {price}",
       cta_note: "Remote: Zahlung vor Leistung via Stripe. Vor Ort: TWINT oder Rechnung nach dem Einsatz. Keine Garantie auf vollständige Lösung — du bekommst immer zuerst eine ehrliche Einschätzung. Fragen vorab:",
-      trust_1: "🔒 SSL-verschlüsselt", trust_2: "💳 TWINT & Kreditkarte", trust_3: "🚫 Kein Abo",
-      foot_imp: "Impressum", foot_agb: "AGB",
-      imp_title: "Impressum", imp_provider: "Anbieter", imp_sole: "Einzelunternehmen",
-      imp_address: "Adresse", imp_country: "Schweiz", imp_contact: "Kontakt",
-      imp_disc_h: "Haftungsausschluss", imp_disc_b: "Alle Angaben ohne Gewähr.",
+      trust_1: "SSL-verschlüsselt", trust_2: "TWINT & Kreditkarte", trust_3: "Kein Abo",
+      foot_imp: "Impressum", foot_agb: "AGB", close: "Schliessen",
+      imp_title: "Impressum", imp_provider: "// Anbieter", imp_sole: "Einzelunternehmen",
+      imp_address: "// Adresse", imp_country: "Schweiz", imp_contact: "// Kontakt",
+      imp_disc_h: "// Haftungsausschluss", imp_disc_b: "Alle Angaben ohne Gewähr.",
       agb_title: "Allgemeine Geschäftsbedingungen",
-      agb_1: "1. Anbieter — Balint Szikszay, Einzelunternehmen, Dorfstrasse 451, 5078 Effingen. Kontakt: hello@bszy.dev",
-      agb_2: "2. Leistungen — Persönliche IT-Support-Dienstleistungen: Schnellberatung remote (39 CHF, bis 15 Min.), Remote-Support (79 CHF, bis 30 Min.), Remote nach Aufwand (110 CHF/h) und Vor-Ort (130 CHF/h, mind. 1 Stunde, zzgl. Anfahrt). Zusätzlicher Aufwand wird pro angefangene 15 Min. abgerechnet.",
-      agb_3: "3. Zahlung — Alle Preise in CHF. Remote-Leistungen: Zahlung vor Leistung via Stripe (Kreditkarte, Apple Pay, Google Pay, TWINT); mit Abschluss kommt der Vertrag zustande. Vor-Ort-Einsätze: Zahlung nach dem Einsatz per TWINT oder Rechnung (zahlbar innert 10 Tagen).",
-      agb_4: "4. Rückerstattung — Pauschalpakete sind nach erbrachter Leistung nicht rückerstattbar. Beim Stundenpaket wird 1 Stunde im Voraus verrechnet; weiterer Aufwand wird vorab kommuniziert.",
-      agb_5: "5. Haftung — Keine Garantie auf vollständige Problemlösung. Haftung begrenzt auf den bezahlten Betrag.",
-      agb_6: "6. Datenschutz — Personendaten werden nur zur Abwicklung genutzt und nicht an Dritte weitergegeben. Zahlungen laufen über Stripe.",
-      agb_7: "7. Recht — Schweizer Recht. Gerichtsstand: Effingen AG.",
+      agb_1_h: "// 1. Anbieter", agb_1: "Balint Szikszay, Einzelunternehmen, Dorfstrasse 451, 5078 Effingen. Kontakt: hello@bszy.dev",
+      agb_2_h: "// 2. Leistungen", agb_2: "Persönliche IT-Support-Dienstleistungen: Schnellberatung remote (39 CHF, bis 15 Min.), Remote-Support (79 CHF, bis 30 Min.), Remote nach Aufwand (110 CHF/h) und Vor-Ort (130 CHF/h, mind. 1 Stunde, zzgl. Anfahrt). Zusätzlicher Aufwand wird pro angefangene 15 Min. abgerechnet.",
+      agb_3_h: "// 3. Zahlung", agb_3: "Alle Preise in CHF. Remote-Leistungen: Zahlung vor Leistung via Stripe (Kreditkarte, Apple Pay, Google Pay, TWINT); mit Abschluss kommt der Vertrag zustande. Vor-Ort-Einsätze: Zahlung nach dem Einsatz per TWINT oder Rechnung (zahlbar innert 10 Tagen).",
+      agb_4_h: "// 4. Rückerstattung", agb_4: "Pauschalpakete sind nach erbrachter Leistung nicht rückerstattbar. Beim Stundenpaket wird 1 Stunde im Voraus verrechnet; weiterer Aufwand wird vorab kommuniziert.",
+      agb_5_h: "// 5. Haftung", agb_5: "Keine Garantie auf vollständige Problemlösung. Haftung begrenzt auf den bezahlten Betrag.",
+      agb_6_h: "// 6. Datenschutz", agb_6: "Personendaten werden nur zur Abwicklung genutzt und nicht an Dritte weitergegeben. Zahlungen laufen über Stripe.",
+      agb_7_h: "// 7. Recht", agb_7: "Schweizer Recht. Gerichtsstand: Effingen AG.",
       agb_stand: "Stand: Oktober 2026 · hello@bszy.dev"
     },
     en: {
-      hero_title: "Computer acting up? I'll help — in person, from Effingen.",
+      skip: "Skip to content",
+      m_cases: "Cases", m_about: "Person", m_steps: "Process", m_plans: "Pricing",
+      hero_a: "Computer acting up?",
+      hero_b: "I'll help — in person, from Effingen.",
       hero_sub: "IT support for private customers in Effingen, the Brugg region and the Fricktal: Mac, PC, iPhone, Wi-Fi and all the everyday stuff. If your problem is fixable, we'll fix it. If it isn't, I'll tell you straight — before any costs come up.",
-      hero_wa: "Message me on WhatsApp", hero_plans: "Packages & prices",
+      hero_wa: "Message me on WhatsApp", hero_plans: "Packages & prices ↓",
+      h_week: "Mon–Fri", h_sat: "Sat",
       hero_badge: "Reply the same day · appointments evenings & Saturdays",
-      about_title: "Who helps you",
-      about_1: "I'm Balint from Effingen. I work in IT for a living, and on evenings and Saturdays I help people in the region with anything to do with computers, phones and the internet.",
-      about_2: "I explain things in plain language and only do what we've agreed on beforehand.",
-      safe_h: "Remote access only with your permission",
-      safe_b: "You see everything I do on your screen and can end the connection at any time with one click.",
-      status_on: "Available",
-      status_off: "Unavailable",
+      status_on: "Available now", status_off: "Currently offline",
       cases_title: "What I help with",
       cases_sub: "A few typical cases — yours not among them? Just ask.",
       case_1_h: "Mac & PC", case_1_b: "Slow, freezing, won't start, updates, setup",
@@ -454,136 +387,133 @@
       case_3_h: "Wi-Fi & Network", case_3_b: "No internet, weak signal, router setup",
       case_4_h: "Accounts & Passwords", case_4_b: "Locked out, two-factor, email setup",
       case_5_h: "Data & Backup", case_5_b: "Back up photos, recover deleted files, set up backups",
+      case_6_h: "Something else?", case_6_b: "Send me a short note about it — I'll tell you honestly whether I can help.",
+      about_title: "Who helps you",
+      about_alt: "Balint, IT help from Effingen",
+      about_1: "I'm Balint from Effingen. I work in IT for a living, and on evenings and Saturdays I help people in the region with anything to do with computers, phones and the internet.",
+      about_2: "I explain things in plain language and only do what we've agreed on beforehand.",
+      safe_h: "Remote access only with your permission",
+      safe_b: "You see everything I do on your screen and can end the connection at any time with one click.",
       steps_title: "How it works",
       step_1_h: "Choose a package", step_1_b: "Remote: pay up front (TWINT or card via Stripe) — on site: just send a request",
       step_2_h: "I get back to you", step_2_b: "The same day via WhatsApp or email, with a suggested appointment",
       step_3_h: "Honest assessment first", step_3_b: "I tell you whether and how I can help — before any further costs",
       step_4_h: "We solve your problem", step_4_b: "Billed by actual time spent — no hidden costs",
-      plans_title: "Packages",
+      plans_title: "Packages", plans_legend: "Choose a package",
       plans_sub: "All prices in CHF. As a small business, no VAT is charged.",
       plan_popular: "POPULAR",
+      kind_remote_pay: "remote · pay up front", kind_remote_req: "remote · request by email", kind_onsite_req: "on site · request by email",
       plan_1_name: "Quick advice", plan_1_desc: "Remote, up to 15 min. One clear question, one clear answer. Flat rate, short & direct.",
       plan_2_name: "Remote support", plan_2_desc: "Up to 30 min via remote access. If it takes longer, I let you know first and bill 110 CHF/h per started 15 min — never without warning.",
       plan_3_name: "Remote by the hour", plan_3_desc: "For bigger jobs via remote access. One hour up front, any further time agreed beforehand and billed per started 15 min.",
       plan_4_name: "On site", plan_4_desc: "Minimum 1 hour, then per started 15 min. Pay on site via TWINT or by invoice. Travel: up to 10 km free · 10–25 km +20 CHF · 25–40 km +35 CHF · >40 km by arrangement.",
-      cta_btn: "Book remote support — 79 CHF",
       cta_book: "Book {name} — {price}",
       cta_request: "Request {name} — {price}",
       cta_note: "Remote: payment before service via Stripe. On site: TWINT or invoice after the visit. No guarantee of a full fix — you always get an honest assessment first. Questions beforehand:",
-      trust_1: "🔒 SSL-encrypted", trust_2: "💳 TWINT & credit card", trust_3: "🚫 No subscription",
-      foot_imp: "Legal notice", foot_agb: "Terms",
-      imp_title: "Legal notice", imp_provider: "Provider", imp_sole: "Sole proprietorship",
-      imp_address: "Address", imp_country: "Switzerland", imp_contact: "Contact",
-      imp_disc_h: "Disclaimer", imp_disc_b: "All information without warranty.",
+      trust_1: "SSL-encrypted", trust_2: "TWINT & credit card", trust_3: "No subscription",
+      foot_imp: "Legal notice", foot_agb: "Terms", close: "Close",
+      imp_title: "Legal notice", imp_provider: "// Provider", imp_sole: "Sole proprietorship",
+      imp_address: "// Address", imp_country: "Switzerland", imp_contact: "// Contact",
+      imp_disc_h: "// Disclaimer", imp_disc_b: "All information without warranty.",
       agb_title: "Terms & Conditions",
-      agb_1: "1. Provider — Balint Szikszay, sole proprietorship, Dorfstrasse 451, 5078 Effingen. Contact: hello@bszy.dev",
-      agb_2: "2. Services — Personal IT support services: remote quick advice (39 CHF, up to 15 min), remote support (79 CHF, up to 30 min), remote by the hour (110 CHF/h) and on-site (130 CHF/h, min. 1 hour, plus travel). Additional time is billed per started 15 min.",
-      agb_3: "3. Payment — All prices in CHF. Remote services: payment before service via Stripe (credit card, Apple Pay, Google Pay, TWINT); the contract is formed upon completed payment. On-site visits: payment after the visit via TWINT or invoice (due within 10 days).",
-      agb_4: "4. Refunds — Flat-rate packages are non-refundable once the service has been provided. For the hourly package, one hour is billed in advance; any further time is communicated beforehand.",
-      agb_5: "5. Liability — No guarantee of a complete fix. Liability is limited to the amount paid.",
-      agb_6: "6. Privacy — Personal data is used only to deliver the service and is not shared with third parties. Payments are processed via Stripe.",
-      agb_7: "7. Governing law — Swiss law. Place of jurisdiction: Effingen AG.",
+      agb_1_h: "// 1. Provider", agb_1: "Balint Szikszay, sole proprietorship, Dorfstrasse 451, 5078 Effingen. Contact: hello@bszy.dev",
+      agb_2_h: "// 2. Services", agb_2: "Personal IT support services: remote quick advice (39 CHF, up to 15 min), remote support (79 CHF, up to 30 min), remote by the hour (110 CHF/h) and on-site (130 CHF/h, min. 1 hour, plus travel). Additional time is billed per started 15 min.",
+      agb_3_h: "// 3. Payment", agb_3: "All prices in CHF. Remote services: payment before service via Stripe (credit card, Apple Pay, Google Pay, TWINT); the contract is formed upon completed payment. On-site visits: payment after the visit via TWINT or invoice (due within 10 days).",
+      agb_4_h: "// 4. Refunds", agb_4: "Flat-rate packages are non-refundable once the service has been provided. For the hourly package, one hour is billed in advance; any further time is communicated beforehand.",
+      agb_5_h: "// 5. Liability", agb_5: "No guarantee of a complete fix. Liability is limited to the amount paid.",
+      agb_6_h: "// 6. Privacy", agb_6: "Personal data is used only to deliver the service and is not shared with third parties. Payments are processed via Stripe.",
+      agb_7_h: "// 7. Governing law", agb_7: "Swiss law. Place of jurisdiction: Effingen AG.",
       agb_stand: "As of October 2026 · hello@bszy.dev"
     }
   };
 
   var currentLang = "de";
 
-  function applyLang(lang){
+  function applyLang(lang) {
     if (!I18N[lang]) lang = "de";
     currentLang = lang;
-    var dict = I18N[lang];
+    var d = I18N[lang];
     document.documentElement.lang = lang;
-    document.querySelectorAll("[data-i18n]").forEach(function(el){
-      var key = el.getAttribute("data-i18n");
-      if (dict[key] != null) el.textContent = dict[key];
+    document.querySelectorAll("[data-i18n]").forEach(function (el) {
+      var k = el.getAttribute("data-i18n");
+      if (d[k] != null) el.textContent = d[k];
     });
-    document.querySelectorAll(".langswitch button").forEach(function(b){
-      b.classList.toggle("active", b.getAttribute("data-lang") === lang);
+    document.querySelectorAll("[data-i18n-alt]").forEach(function (el) {
+      var k = el.getAttribute("data-i18n-alt");
+      if (d[k] != null) el.setAttribute("alt", d[k]);
     });
-    updateStatus(); // Status-Text an neue Sprache anpassen
-    updateCta();    // CTA-Button-Text an neue Sprache anpassen
+    document.querySelectorAll("[data-close]").forEach(function (b) { b.setAttribute("aria-label", d.close); });
+    document.querySelectorAll(".langswitch button").forEach(function (b) {
+      b.setAttribute("aria-pressed", b.getAttribute("data-lang") === lang ? "true" : "false");
+    });
+    updateStatus();
+    updateCta();
     try {
       var url = new URL(window.location);
       url.searchParams.set("lang", lang);
       window.history.replaceState(null, "", url);
-    } catch(e){}
+    } catch (e) {}
   }
 
-  // Erreichbarkeit Zeit Bern (Europe/Zurich): Mo–Fr 18–21 Uhr, Sa 9–17 Uhr,
-  // unabhängig von der Zeitzone des Besuchers.
-  function updateStatus(){
-    var parts = new Intl.DateTimeFormat('en-GB', {
-      timeZone: 'Europe/Zurich', hour: '2-digit', hour12: false, weekday: 'short'
-    }).formatToParts(new Date());
-    var hourBern = 0, day = '';
-    parts.forEach(function(p){
-      if (p.type === 'hour') hourBern = parseInt(p.value, 10);
-      if (p.type === 'weekday') day = p.value;
+  /* Erreichbarkeit in Zeit Bern (Europe/Zurich): Mo–Fr 18–21, Sa 9–17 */
+  function updateStatus() {
+    var parts = new Intl.DateTimeFormat("en-GB", { timeZone: "Europe/Zurich", hour: "2-digit", hour12: false, weekday: "short" }).formatToParts(new Date());
+    var h = 0, day = "";
+    parts.forEach(function (p) {
+      if (p.type === "hour") h = parseInt(p.value, 10);
+      if (p.type === "weekday") day = p.value;
     });
-    var weekday = ['Mon','Tue','Wed','Thu','Fri'].indexOf(day) !== -1;
-    var open = (weekday && hourBern >= 18 && hourBern < 21) || (day === 'Sat' && hourBern >= 9 && hourBern < 17);
-    var el = document.getElementById('status');
-    var txt = document.getElementById('statusText');
-    var dict = I18N[currentLang];
-    if (open) {
-      el.classList.remove('off');
-      txt.textContent = dict.status_on;
-    } else {
-      el.classList.add('off');
-      txt.textContent = dict.status_off;
-    }
+    var weekday = ["Mon", "Tue", "Wed", "Thu", "Fri"].indexOf(day) !== -1;
+    var open = (weekday && h >= 18 && h < 21) || (day === "Sat" && h >= 9 && h < 17);
+    document.getElementById("status").classList.toggle("off", !open);
+    document.getElementById("statusText").textContent = I18N[currentLang][open ? "status_on" : "status_off"];
   }
 
-  document.querySelectorAll(".langswitch button").forEach(function(b){
-    b.addEventListener("click", function(){ applyLang(b.getAttribute("data-lang")); });
-  });
-
-  // ---- Paket-Auswahl ----
-  var selectedPlan = document.querySelector(".plan.selected");
-
-  function selectPlan(plan){
-    if (!plan) return;
-    document.querySelectorAll(".plan").forEach(function(p){
-      p.classList.remove("selected");
-      p.setAttribute("aria-pressed", "false");
-    });
-    plan.classList.add("selected");
-    plan.setAttribute("aria-pressed", "true");
-    selectedPlan = plan;
-    updateCta();
-  }
-
-  function updateCta(){
+  /* Paketwahl → Button */
+  function updateCta() {
+    var sel = document.querySelector('input[name="plan"]:checked');
     var btn = document.getElementById("ctaBtn");
-    if (!btn || !selectedPlan) return;
-    var dict = I18N[currentLang];
-    var name = dict[selectedPlan.getAttribute("data-name-key")] || "";
-    var price = selectedPlan.getAttribute("data-price");
-    var url = selectedPlan.getAttribute("data-url");
+    if (!sel || !btn) return;
+    var d = I18N[currentLang];
+    var name = d[sel.getAttribute("data-name-key")] || "";
+    var price = sel.getAttribute("data-price");
+    var url = sel.getAttribute("data-url");
     var isMail = url.indexOf("mailto:") === 0;
-    var tpl = isMail ? dict.cta_request : dict.cta_book;
-    btn.textContent = tpl.replace("{name}", name).replace("{price}", price);
+    btn.textContent = (isMail ? d.cta_request : d.cta_book).replace("{name}", name).replace("{price}", price);
     btn.setAttribute("href", url);
-    // Stripe im neuen Tab, E-Mail im selben Fenster
-    if (isMail) { btn.removeAttribute("target"); }
+    if (isMail) { btn.removeAttribute("target"); btn.removeAttribute("rel"); }
     else { btn.setAttribute("target", "_blank"); btn.setAttribute("rel", "noopener"); }
   }
+  document.querySelectorAll('input[name="plan"]').forEach(function (r) { r.addEventListener("change", updateCta); });
 
-  document.querySelectorAll(".plan").forEach(function(plan){
-    plan.addEventListener("click", function(){ selectPlan(plan); });
-    plan.addEventListener("keydown", function(e){
-      if (e.key === "Enter" || e.key === " ") { e.preventDefault(); selectPlan(plan); }
-    });
+  document.querySelectorAll(".langswitch button").forEach(function (b) {
+    b.addEventListener("click", function () { applyLang(b.getAttribute("data-lang")); });
   });
 
-  // Startsprache: URL-Parameter, sonst Browsersprache, sonst Deutsch
-  var params = new URLSearchParams(window.location.search);
-  var start = params.get("lang");
-  if (!start) start = (navigator.language || "de").slice(0,2).toLowerCase();
-  if (start !== "en") start = "de";
-  applyLang(start);
+  /* Dialoge */
+  document.querySelectorAll("[data-open]").forEach(function (b) {
+    b.addEventListener("click", function () { document.getElementById(b.getAttribute("data-open")).showModal(); });
+  });
+  document.querySelectorAll("dialog").forEach(function (dlg) {
+    dlg.querySelector("[data-close]").addEventListener("click", function () { dlg.close(); });
+    dlg.addEventListener("click", function (e) { if (e.target === dlg) dlg.close(); });
+  });
+
+  var start = new URLSearchParams(window.location.search).get("lang")
+           || (navigator.language || "de").slice(0, 2).toLowerCase();
+  applyLang(start === "en" ? "en" : "de");
   setInterval(updateStatus, 60000);
+
+  /* Dezentes Einblenden beim Scrollen */
+  var items = document.querySelectorAll(".rv");
+  if ("IntersectionObserver" in window) {
+    var io = new IntersectionObserver(function (es) {
+      es.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); } });
+    }, { rootMargin: "0px 0px -8% 0px", threshold: 0.08 });
+    items.forEach(function (el) { io.observe(el); });
+  } else {
+    items.forEach(function (el) { el.classList.add("in"); });
+  }
 </script>
 </body>
 </html>
