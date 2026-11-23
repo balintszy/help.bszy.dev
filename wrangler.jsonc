@@ -1,6 +1,0 @@
-{
-  // Cloudflare Workers: statische Seite help.bszy.dev
-  "name": "help-bszy-dev",
-  "compatibility_date": "2026-11-01",
-  "assets": { "directory": "./" }
-}
